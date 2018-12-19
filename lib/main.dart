@@ -23,7 +23,7 @@ class AdamDemoApp extends StatelessWidget {
       ),
       // Register main route table
       routes: {
-        "new_page": (context) => NewRoute(),
+        "new_page": (context) => ListViewTest(),
         "echo_page": (context) => EchoRoute("Fixed content"),
         "random_page": (context) => RandomWordsWidget(),
         "counter_page": (context) => NewRoute2(),
@@ -160,6 +160,320 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+class ListViewTest extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    return MaterialApp(
+      title: "List view test",
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("Demo list view"),
+        ),
+        body: ListView(
+          padding: const EdgeInsets.all(20.0),
+          children: <Widget>[
+        new ListTile(
+        leading: new Icon(Icons.map),
+        title: new Text('Maps'),
+          onTap: () {
+
+          },
+      ),
+      new ListTile(
+        leading: new Icon(Icons.photo_album),
+        title: new Text('Album'),
+        onTap: () {
+
+        },
+      ),
+      new ListTile(
+        leading: new Icon(Icons.phone),
+        title: new Text('Phone'),
+        onTap: () {
+
+        },
+      ),
+          ],
+        ),
+      ),
+    );
+  }
+
+}
+
+class FormTestRoute extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _FormTestRouteSate();
+  }
+
+}
+
+class _FormTestRouteSate extends State<FormTestRoute> {
+  TextEditingController _nameController = new TextEditingController();
+  TextEditingController _passwordController = new TextEditingController();
+  GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Test form"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+        child: Form(
+          key: _formKey,
+          autovalidate: true,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                autofocus: true,
+                controller: _nameController,
+                decoration: InputDecoration(
+                  labelText: "Name:",
+                  hintText: "user name or email address",
+                  icon: Icon(Icons.person)
+                ),
+                validator: (v) {
+                  return v.trim().length == 0? "user name can not be null...": "";
+                },
+              ),
+              TextFormField(
+                controller: _passwordController,
+                decoration: InputDecoration(
+                  labelText: "Password:",
+                    hintText: "Your log password...",
+                    icon: Icon(Icons.lock)
+                ),
+                obscureText: true,
+                validator: (v) {
+                  return v.trim().length > 5? null: "password not less than 6...";
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top:28.0),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: RaisedButton(
+                          padding: EdgeInsets.all(15.0),
+                          child: Text("LogIn"),
+                          color: Theme.of(context).primaryColor,
+                          textColor: Colors.white,
+                          onPressed: () {
+                        if ((_formKey.currentState as FormState).validate()) {
+                            print("Pass~~~~~~~~~~~");
+                        }
+                      }),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+}
+
+
+class FocusTestRoute extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return FocusTestRouteState();
+  }
+
+}
+
+class FocusTestRouteState extends State<FocusTestRoute> {
+
+  FocusNode focusNode1 = new FocusNode();
+  FocusNode focusNode2 = new FocusNode();
+  FocusScopeNode scopeNode;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Demo edit text focus"),
+      ),
+      body: Column(
+        children: <Widget>[
+          TextField(
+            autofocus: true,
+            focusNode: focusNode1,
+            decoration: InputDecoration(
+              labelText: "Text1"
+            ),
+          ),
+          TextField(
+            focusNode: focusNode2,
+            decoration: InputDecoration(
+              labelText: "Text2"
+            ),
+          ),
+          // Build button
+          Builder(
+            builder: (ctx) {
+              return Column(
+                children: <Widget>[
+                  RaisedButton(
+                    child: Text("Move focus"),
+                    onPressed: () {
+                      if (scopeNode == null) {
+                        scopeNode = FocusScope.of(context);
+                      }
+                      scopeNode.requestFocus(focusNode2);
+                    },
+                  ),
+                  RaisedButton(
+                    child: Text("Hide focus"),
+                    onPressed: () {
+                        focusNode1.unfocus();
+                        focusNode2.unfocus();
+                    },
+                  ),
+                ],
+              );
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+}
+
+
+class SwitchAndCheckBoxTest extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _SwitchAndCheckBoxTestSate();
+  }
+}
+
+class _SwitchAndCheckBoxTestSate extends State<SwitchAndCheckBoxTest> {
+
+  bool _switch = true;
+  bool _check = true;
+
+  TextEditingController _controller = new TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // set default data
+    _controller.text = "hello adam....";
+    _controller.selection = TextSelection(baseOffset: 2,
+        extentOffset: _controller.text.length);
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Demo switch and checkbox"),
+        ),
+        body: Center(
+          child: Column(
+            children: <Widget>[
+                Switch(
+                  value: _switch,
+                  onChanged: (value) {
+                    print(value);
+                    setState(() {
+                      _switch = value;
+                    });
+                  },
+                ),
+              Checkbox(
+                value: _check,
+                activeColor: Colors.red,
+                onChanged: (value) {
+                  print(value);
+                  setState(() {
+                    _check = value;
+                  });
+                },
+              ),
+              TextField(
+                controller: _controller,
+                autofocus: true,
+                decoration: InputDecoration(
+                  labelText: "Name",
+                  hintText: "user name or email",
+                  prefixIcon: Icon(Icons.person),
+                ),
+                maxLength: 100,
+              ),
+              TextField(
+                autofocus: true,
+                decoration: InputDecoration(
+                  labelText: "Password",
+                  hintText: "your login password",
+                  prefixIcon: Icon(Icons.lock),
+                ),
+                obscureText: true,
+              )
+            ],
+          ),
+        ),
+    );
+  }
+
+}
+
+
+class IconRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Icon(
+          Icons.accessible,
+          color: Colors.white,
+          size: 100.0,
+        ),
+        Icon(
+          Icons.thumb_up,
+          color: Colors.white,
+          size: 50.0,
+        ),
+        Icon(
+          Icons.account_circle,
+          color: Colors.white,
+          size: 50.0,
+        ),
+      ],
+    );
+  }
+
+}
+
+class ImageRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Image(
+      image: NetworkImage(
+          "https://avatars2.githubusercontent.com/u/20411648?s=460&v=4"),
+      width: 100.0,
+      fit: BoxFit.none,
+      color: Colors.redAccent,
+      colorBlendMode: BlendMode.difference,
+    );
+  }
+
+}
+
 
 class NewRoute extends StatelessWidget {
 
