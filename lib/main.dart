@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:english_words/english_words.dart';
+import 'package:flutter/widgets.dart';
 
 void main() => runApp(AdamDemoApp());
 
@@ -23,9 +23,8 @@ class AdamDemoApp extends StatelessWidget {
       ),
       // Register main route table
       routes: {
-        "new_page": (context) => ListViewTest(),
+        "new_page": (context) => PaddingTestRoute(),
         "echo_page": (context) => EchoRoute("Fixed content"),
-        "random_page": (context) => RandomWordsWidget(),
         "counter_page": (context) => NewRoute2(),
         "tapbox_page": (context) => ParentWidgetC(),
       },
@@ -140,7 +139,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "counter_page");
               },
             ),
-            RandomWordsWidget(),
 //            FlatButton(
 //              child: Text("Open random route"),
 //              textColor: Colors.green,
@@ -159,6 +157,121 @@ class _MyHomePageState extends State<MyHomePage> {
 
     );
   }
+}
+
+class PaddingTestRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.yellow,
+      body: Padding(padding: EdgeInsets.all(50.0),
+            child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 50.0),
+                      child: Text("Hello left"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 50.0),
+                      child: Text("Hello Vertical"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                      child: Text("Hello four direction"),
+                    ),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minWidth: double.infinity,
+                        maxHeight: 50.0
+                      ),
+                      child: Container(
+                        height: 100.0,
+                        child: DecoratedBox(decoration: BoxDecoration(color: Colors.green)),
+                      ),
+                    ),
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: [Colors.blue, Colors.orange[300]]),
+                        borderRadius: BorderRadius.circular(3.0),
+                        boxShadow: [BoxShadow(
+                          color: Colors.black54,
+                          offset: Offset(12.0, 12.0),
+                          blurRadius: 4.0,
+                        ),],
+
+                      ),
+                      child: Padding(padding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 80.0),
+                             child: Text("LogIn", style: TextStyle(color: Colors.white),),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        DecoratedBox(
+                          decoration: BoxDecoration(color: Colors.red),
+                          child: RotatedBox(
+                            quarterTurns: 1,
+                            child: Text("Hello rotate"),
+                          ),
+                        ),
+                        Text("Hi HI", style: TextStyle(color: Colors.green, fontSize: 24.0),),
+                      ],
+                    ),
+                    Container(
+                      color: Colors.black,
+                      child: Transform(transform: Matrix4.skewY(0.5),
+                            alignment: Alignment.topLeft,
+                            child: Container(
+                              padding: const EdgeInsets.all(8.0),
+                              color: Colors.orangeAccent,
+                              child: const Text("Hi special...."),
+                            ),
+                      ),
+                    ),
+                  ],
+      ),
+      ),
+    );
+  }
+
+}
+
+
+
+class FlexLayoutTestRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Demo constrainted box"),
+      ),
+      body: ConstrainedBox(
+        constraints: BoxConstraints.expand(),
+        child: Stack(
+          alignment: Alignment.center,
+          fit: StackFit.expand,
+          children: <Widget>[
+            Container(
+              child: Text("This is constrained box message"),
+              color: Colors.green,
+            ),
+            Positioned(
+              left: 18.0,
+              child: Text("I am left man"),
+            ),
+            Positioned(
+              top: 18.0,
+              child: Text("I am top man"),
+            ),
+          ],
+        ),
+
+      ),
+    );
+  }
+
 }
 
 class ListViewTest extends StatelessWidget {
@@ -610,18 +723,6 @@ class _EchoPageState extends State<EchoRoute> {
 }
 
 
-class RandomWordsWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-
-    final wordPair = new WordPair.random();
-    return Padding(
-        padding: const EdgeInsets.all(0.8),
-        child: new Text(wordPair.toString()),
-    );
-  }
-
-}
 class NewRoute2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
