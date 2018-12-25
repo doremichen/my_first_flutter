@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+import 'utils.dart';
 
 void main() => runApp(AdamDemoApp());
 
@@ -23,10 +26,11 @@ class AdamDemoApp extends StatelessWidget {
       ),
       // Register main route table
       routes: {
-        "new_page": (context) => PaddingTestRoute(),
+        "new_page": (context) => NotificationTestRoute(),
         "echo_page": (context) => EchoRoute("Fixed content"),
         "counter_page": (context) => NewRoute2(),
         "tapbox_page": (context) => ParentWidgetC(),
+        "notify_page": (context) => CustNotifyTestRoute(),
       },
       home: MyHomePage(title: 'Flutter Demo Main activity'),
     );
@@ -101,6 +105,13 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             FlatButton(
+              child: Text("Go to notify page"),
+              textColor: Colors.green,
+              onPressed: () {
+                Navigator.pushNamed(context, "notify_page");
+              },
+            ),
+            FlatButton(
               child: Text("go to tapBox... "*4,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,),
@@ -139,6 +150,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, "counter_page");
               },
             ),
+            RaisedButton(
+              child: Text("Show alert dialog", style: TextStyle(fontSize: 24),),
+              onPressed: () {
+//                showAlertDialog(context);
+                Utils.showAlertDialog(context);
+
+              },
+            ),
 //            FlatButton(
 //              child: Text("Open random route"),
 //              textColor: Colors.green,
@@ -157,6 +176,210 @@ class _MyHomePageState extends State<MyHomePage> {
 
     );
   }
+}
+
+//void showAlertDialog(BuildContext context) {
+//    showDialog(context: context,
+//        builder: (context) => new AlertDialog(
+//          title: Text("Dialog title"),
+//          content: Text("This is content of the dialog"),
+//          actions: <Widget>[
+//            RaisedButton(
+//              child: Text("Ok", style: TextStyle(color: Colors.black),),
+//              onPressed: () {
+//                Navigator.of(context).pop();
+//              },
+//            ),
+//
+//          ],
+//        ),
+//    );
+//}
+
+///
+/// customize notification
+///
+class MyNotify extends Notification {
+  final String msg;
+  MyNotify(this.msg);
+}
+
+class CustNotifyTestRoute extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _CustNotifyTestRouteState();
+  }
+}
+
+class _CustNotifyTestRouteState extends State<CustNotifyTestRoute> {
+
+  String _msg = "";
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      appBar: AppBar(title: Text("Notify Notify Notify"),),
+      body: NotificationListener<MyNotify> (
+        onNotification: (notify) {
+          setState(() {
+            _msg = "Info: " + notify.msg;
+          });
+        },
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Builder(
+                builder: (context) {
+                  return RaisedButton(
+                    child: Text("Send message"),
+                    onPressed: () {
+                      MyNotify("Hi notify...").dispatch(context);
+                    },
+                  );
+                },
+              ),
+              Text(_msg),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+}
+
+
+
+class NotificationTestRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Test Test Test Notifacation"),),
+      body: NotificationListener(
+          onNotification: (notify){
+            switch(notify.runtimeType) {
+              case ScrollStartNotification:
+                print("ScrollStartNotification...");
+                Fluttertoast.showToast(msg: "ScrollStartNotification...");
+                break;
+              case ScrollUpdateNotification:
+                print("ScrollUpdateNotification...");
+                Fluttertoast.showToast(msg: "ScrollUpdateNotification...");
+                break;
+              case ScrollEndNotification:
+                print("ScrollEndNotification...");
+                Fluttertoast.showToast(msg: "ScrollEndNotification...");
+                break;
+              case OverscrollNotification:
+                print("OverscrollNotification...");
+                Fluttertoast.showToast(msg: "OverscrollNotification...");
+                break;
+            }
+          },
+          child: ListView.builder(
+              itemBuilder: (context, id) {
+                  return ListTile(title: Text("Item: $id"),);
+              },
+              itemCount: 100,
+          )
+      ),
+    );
+  }
+
+}
+
+
+class GestureTestRoute extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return GestureTestRouteState();
+  }
+
+}
+
+class GestureTestRouteState extends State<GestureTestRoute> {
+  double _width = 200.0;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Demo gesture detector"),),
+      body: Center(
+        child: GestureDetector(
+          child: Image.asset("./image/demo_banner.png", width: _width,),
+          onScaleUpdate: (ScaleUpdateDetails detail) {
+            setState(() {
+              _width = 200*detail.scale.clamp(0.8, 10.0);
+            });
+          },
+        ),
+      ),
+    );
+  }
+
+}
+
+
+class EventTestRoute extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _EventTestRouteSate();
+  }
+
+}
+
+class _EventTestRouteSate extends State<EventTestRoute> {
+
+  PointerEvent _ptEvnt;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Demo event"),
+      ),
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+              Listener(
+                child: Container(
+                  alignment: Alignment.center,
+                  color: Colors.blue,
+                  width: 300.0,
+                  height: 150.0,
+                  child: Text(_ptEvnt?.toString()??"", style: TextStyle(color: Colors.white),),
+                ),
+                onPointerDown: (PointerDownEvent event) => setState(()=>_ptEvnt=event),
+                onPointerMove: (PointerMoveEvent event) => setState(()=>_ptEvnt=event),
+                onPointerUp: (PointerUpEvent event) => setState(()=>_ptEvnt=event),
+              ),
+              Stack(
+                children: <Widget>[
+                  Listener(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints.tight(Size(300.0, 200.0)),
+                      child: DecoratedBox(decoration: BoxDecoration(color: Colors.blue)),
+                    ),
+                    onPointerDown: (event) => print("point0"),
+                  ),
+                  Listener(
+                    child: ConstrainedBox(
+                        constraints: BoxConstraints.tight(Size(200.0, 100.0)),
+                        child: Center(child: Text("ha ha ha"),),
+                    ),
+                    onPointerDown: (event) => print("point1"),
+                    //behavior: HitTestBehavior.opaque,
+                  ),
+                ],
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
 }
 
 class PaddingTestRoute extends StatelessWidget {
