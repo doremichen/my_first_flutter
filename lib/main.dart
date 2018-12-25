@@ -26,7 +26,7 @@ class AdamDemoApp extends StatelessWidget {
       ),
       // Register main route table
       routes: {
-        "new_page": (context) => NotificationTestRoute(),
+        "new_page": (context) => ScaleAnimateRoute(),
         "echo_page": (context) => EchoRoute("Fixed content"),
         "counter_page": (context) => NewRoute2(),
         "tapbox_page": (context) => ParentWidgetC(),
@@ -130,7 +130,14 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text("open new route"),
               textColor: Colors.black,
               onPressed: () {
-                Navigator.pushNamed(context, "new_page");
+                Navigator.push(context, PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: ParentWidgetC(),
+                        );
+                },
+                ));
+//                Navigator.pushNamed(context, "new_page");
 //                Navigator.push(context, new MaterialPageRoute(builder: (context) {
 //                  return new NewRoute();
 //                }));
@@ -178,23 +185,82 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-//void showAlertDialog(BuildContext context) {
-//    showDialog(context: context,
-//        builder: (context) => new AlertDialog(
-//          title: Text("Dialog title"),
-//          content: Text("This is content of the dialog"),
-//          actions: <Widget>[
-//            RaisedButton(
-//              child: Text("Ok", style: TextStyle(color: Colors.black),),
-//              onPressed: () {
-//                Navigator.of(context).pop();
-//              },
-//            ),
+///
+/// Scale animate route
+///
+class ScaleAnimateRoute extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _ScaleAnimateRouteState();
+  }
+
+}
+
+class _ScaleAnimateRouteState extends State<ScaleAnimateRoute> with SingleTickerProviderStateMixin {
+  Animation<double> animation;
+  AnimationController controller;
+
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+        duration: const Duration(seconds: 1),
+        vsync: this);
+
+    // Curve animation
+//    animation = CurvedAnimation(parent: controller, curve: Curves.bounceIn);
+
+//    animation = Tween(begin: 0.0, end: 300.0).animate(controller)
+//    ..addListener((){
+//      setState(() {
 //
-//          ],
-//        ),
-//    );
-//}
+//      });
+//    });
+
+    animation = Tween(begin: 0.0, end: 300.0).animate(controller)
+    ..addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        controller.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        controller.forward();
+      }
+
+      setState(() {
+
+      });
+    });
+
+    // execute forward
+    controller.forward();
+  }
+
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Demo scale animate image"),
+      ),
+      body: Center(
+        child: Image.asset("image/demo_banner.png",
+          width: animation.value,
+          height: animation.value,
+        ),
+
+      )
+    );
+  }
+
+}
+
 
 ///
 /// customize notification
