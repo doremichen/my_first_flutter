@@ -31,6 +31,7 @@ class AdamDemoApp extends StatelessWidget {
         "counter_page": (context) => NewRoute2(),
         "tapbox_page": (context) => ParentWidgetC(),
         "notify_page": (context) => CustNotifyTestRoute(),
+        "play_custanimation": (context) => custAnimationDemo(),
       },
       home: MyHomePage(title: 'Flutter Demo Main activity'),
     );
@@ -104,6 +105,12 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            RaisedButton(
+              child: Text("Play custanimation", style: TextStyle(fontSize: 24),),
+              onPressed: () {
+                Navigator.pushNamed(context, "play_custanimation");
+              },
+            ),
             FlatButton(
               child: Text("Go to notify page"),
               textColor: Colors.green,
@@ -183,6 +190,124 @@ class _MyHomePageState extends State<MyHomePage> {
 
     );
   }
+}
+
+///
+/// Customize animation
+///
+class CustomizeAnimation extends StatelessWidget {
+  final Animation<double> controller;
+  Animation<double> height;
+  Animation<EdgeInsets> padding;
+  Animation<Color> color;
+
+  CustomizeAnimation({Key key, this.controller}):super(key: key) {
+   // animation height
+   height = Tween<double>(begin: .0, end: 300.0).animate(CurvedAnimation(
+     parent: controller,
+     curve: Interval(0.0, 0.6, curve: Curves.ease,),
+   ),);
+
+   // animation color
+    color = ColorTween(
+      begin: Colors.green,
+      end: Colors.orange,
+    ).animate(CurvedAnimation(
+      parent: controller,
+      curve: Interval(0.0, 0.6, curve: Curves.easeOut,),
+    ),);
+
+    // animation padding
+    padding = Tween<EdgeInsets>(
+      begin: EdgeInsets.only(left: 10.0),
+      end: EdgeInsets.only(left: 250.0)
+    ).animate(CurvedAnimation(
+      parent: controller,
+      curve: Interval(.0, 1.0, curve: Curves.easeIn,),
+    ),);
+  }
+
+  Widget _playAnimation(BuildContext context, Widget child) {
+    return Container(
+      alignment: Alignment.bottomLeft,
+      padding: padding.value,
+      child: Container(
+        color: color.value,
+        width: 10.0,
+        height: height.value,
+      ),
+    );
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      builder: _playAnimation,
+      animation: controller,
+    );
+  }
+}
+
+///
+/// Demo customized animation
+///
+class custAnimationDemo extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _custAnimationDemoState();
+  }
+
+}
+
+class _custAnimationDemoState extends State<custAnimationDemo> with TickerProviderStateMixin
+{
+
+  AnimationController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Demo custimized animation"),
+      ),
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          _playAnimation();
+        },
+        child: Center(
+          child: Container(
+            width: 300.0,
+            height: 300.0,
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.1),
+              border: Border.all(color: Colors.black.withOpacity(0.5)),
+            ),
+            child: CustomizeAnimation(controller: controller,),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = AnimationController(vsync: this, duration: const Duration(seconds: 5));
+
+  }
+
+  Future<void> _playAnimation() async {
+    try {
+        await controller.forward().orCancel;
+        await controller.reverse().orCancel;
+    } on TickerCanceled {
+      Fluttertoast.showToast(msg: "the animation got canceled, probably because we were disposed");
+    }
+  }
+
 }
 
 ///
