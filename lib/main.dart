@@ -57,7 +57,19 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+typedef ItemCallBack = Widget Function(BuildContext context);
+
+class ItemData {
+  final String text;
+  ItemCallBack ontap;
+
+  ItemData({this.text, this.ontap});
+}
+
+
 class _MyHomePageState extends State<MyHomePage> {
+
+
   int _counter = 0;
 
   void _incrementCounter() {
@@ -73,12 +85,40 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+
+    final List<ItemData> items = [
+      ItemData(text: "Play custanimation",
+          ontap: (context) {
+            Navigator.pushNamed(context, "play_custanimation");
+          }),
+      ItemData(text: "Go to notify page",
+        ontap: (context) {
+          Navigator.pushNamed(context, "notify_page");
+        },),
+      ItemData(text: "go to tapBox... "*4,
+        ontap: (context) {
+          Navigator.pushNamed(context, "tapbox_page");
+        },),
+      ItemData(text: "Open echo route",
+        ontap: (context) {
+          Navigator.push(context, PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
+            return FadeTransition(
+              opacity: animation,
+              child: ParentWidgetC(),
+            );
+          },
+          ));
+        },),
+      ItemData(text: "Go to counter page",
+        ontap: (context) {
+          Navigator.pushNamed(context, "counter_page");
+        },),
+      ItemData(text: "Show alert dialog",
+        ontap: (context) {
+          Utils.showAlertDialog(context);
+        },),
+    ];
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -86,46 +126,30 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
-          // Column is also layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            RaisedButton(
-              child: Text("Play custanimation", style: TextStyle(fontSize: 24),),
-              onPressed: () {
-                Navigator.pushNamed(context, "play_custanimation");
-              },
+            Expanded(
+              child: ListView.builder(
+                  itemCount: items.length,
+                  itemBuilder: (context, id) {
+                    return Card(
+                      child: ListTile(
+                        title: Text(items[id].text),
+                        onTap: () {
+                          items[id].ontap(context);
+                        },
+                      ),
+
+                    );
+                  },
+              ),
             ),
-            FlatButton(
-              child: Text("Go to notify page"),
-              textColor: Colors.green,
-              onPressed: () {
-                Navigator.pushNamed(context, "notify_page");
-              },
+            Container(
+              color: Colors.red,
+              height: 5.0,
             ),
-            FlatButton(
-              child: Text("go to tapBox... "*4,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,),
-              onPressed: () {
-                Navigator.pushNamed(context, "tapbox_page");
-              },
-            ),
+
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.display1,
@@ -133,52 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'He have clicked the button this many times:',
             ),
-            FlatButton(
-              child: Text("open new route"),
-              textColor: Colors.black,
-              onPressed: () {
-                Navigator.push(context, PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
-                        return FadeTransition(
-                          opacity: animation,
-                          child: ParentWidgetC(),
-                        );
-                },
-                ));
-//                Navigator.pushNamed(context, "new_page");
-//                Navigator.push(context, new MaterialPageRoute(builder: (context) {
-//                  return new NewRoute();
-//                }));
-              },
-            ),
-            FlatButton(
-              child: Text("Open echo route"),
-              textColor: Colors.red,
-              onPressed: () {
-                Navigator.pushNamed(context, "echo_page");
-              },
-            ),
-            FlatButton(
-              child: Text("Go to counter page"),
-              textColor: Colors.green,
-              onPressed: () {
-                Navigator.pushNamed(context, "counter_page");
-              },
-            ),
-            RaisedButton(
-              child: Text("Show alert dialog", style: TextStyle(fontSize: 24),),
-              onPressed: () {
-//                showAlertDialog(context);
-                Utils.showAlertDialog(context);
 
-              },
-            ),
-//            FlatButton(
-//              child: Text("Open random route"),
-//              textColor: Colors.green,
-//              onPressed: () {
-//                Navigator.pushNamed(context, "random_page");
-//              },
-//            ),
           ],
         ),
       ),
