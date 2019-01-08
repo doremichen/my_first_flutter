@@ -4,6 +4,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import 'utils.dart';
 
+import 'ui/adam_chat.dart';
+
 void main() => runApp(AdamDemoApp());
 
 class AdamDemoApp extends StatelessWidget {
@@ -32,6 +34,7 @@ class AdamDemoApp extends StatelessWidget {
         "tapbox_page": (context) => ParentWidgetC(),
         "notify_page": (context) => CustNotifyTestRoute(),
         "play_custanimation": (context) => custAnimationDemo(),
+        "Adam chat": (context) => ChatScreen(),
       },
       home: MyHomePage(title: 'Flutter Demo Main activity'),
     );
@@ -61,9 +64,9 @@ typedef ItemCallBack = Widget Function(BuildContext context);
 
 class ItemData {
   final String text;
-  ItemCallBack ontap;
+  ItemCallBack onTap;
 
-  ItemData({this.text, this.ontap});
+  ItemData({this.text, this.onTap});
 }
 
 
@@ -88,19 +91,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final List<ItemData> items = [
       ItemData(text: "Play custanimation",
-          ontap: (context) {
+          onTap: (context) {
             Navigator.pushNamed(context, "play_custanimation");
           }),
       ItemData(text: "Go to notify page",
-        ontap: (context) {
+        onTap: (context) {
           Navigator.pushNamed(context, "notify_page");
         },),
       ItemData(text: "go to tapBox... "*4,
-        ontap: (context) {
+        onTap: (context) {
           Navigator.pushNamed(context, "tapbox_page");
         },),
       ItemData(text: "Open echo route",
-        ontap: (context) {
+        onTap: (context) {
           Navigator.push(context, PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
             return FadeTransition(
               opacity: animation,
@@ -110,12 +113,16 @@ class _MyHomePageState extends State<MyHomePage> {
           ));
         },),
       ItemData(text: "Go to counter page",
-        ontap: (context) {
+        onTap: (context) {
           Navigator.pushNamed(context, "counter_page");
         },),
       ItemData(text: "Show alert dialog",
-        ontap: (context) {
+        onTap: (context) {
           Utils.showAlertDialog(context);
+        },),
+      ItemData(text: "Adam chat",
+        onTap: (context) {
+          Navigator.pushNamed(context, "Adam chat");
         },),
     ];
 
@@ -137,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: ListTile(
                         title: Text(items[id].text),
                         onTap: () {
-                          items[id].ontap(context);
+                          items[id].onTap(context);
                         },
                       ),
 
