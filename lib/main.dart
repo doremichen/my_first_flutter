@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_app/ui/material_log_in.dart';
 
 import 'utils.dart';
 
@@ -24,7 +25,7 @@ class AdamDemoApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.lightBlue,
       ),
       // Register main route table
       routes: {
@@ -35,6 +36,7 @@ class AdamDemoApp extends StatelessWidget {
         "notify_page": (context) => CustNotifyTestRoute(),
         "play_custanimation": (context) => custAnimationDemo(),
         "Adam chat": (context) => ChatScreen(),
+        "Log in": (context) => LogInView(),
       },
       home: MyHomePage(title: 'Flutter Demo Main activity'),
     );
@@ -123,6 +125,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ItemData(text: "Adam chat",
         onTap: (context) {
           Navigator.pushNamed(context, "Adam chat");
+        },),
+      ItemData(text: "Material tranning",
+        onTap: (context) {
+          Navigator.pushNamed(context, "Log in");
         },),
     ];
 
