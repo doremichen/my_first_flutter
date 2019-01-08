@@ -21,6 +21,9 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   // Edit controller
   final TextEditingController _etController = TextEditingController();
 
+  // Control icon button state
+  bool _isComposing = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -46,30 +49,42 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   //  private section
   //
   Widget _buildTextComposer() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8.0),
-      child:Row(
-        children: <Widget>[
-          Flexible(
-            child:  TextField(
-              controller: _etController,
-              decoration: InputDecoration.collapsed(hintText: "Send a message"),
-              onSubmitted: _handleSubmitted,
+    return IconTheme(
+      data: IconThemeData(color: Theme.of(context).accentColor),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 8.0),
+        child:Row(
+          children: <Widget>[
+            Flexible(
+              child:  TextField(
+                controller: _etController,
+                decoration: InputDecoration.collapsed(hintText: "Send a message"),
+                onChanged: (text) {
+                  setState(() {
+                    _isComposing = text.length > 0;
+                  });
+                },
+                onSubmitted: _handleSubmitted,
+              ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 4.0),
-            child: IconButton(icon: Icon(Icons.send),
-                onPressed: () => _handleSubmitted(_etController.text),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 4.0),
+              child: IconButton(icon: Icon(Icons.send),
+                onPressed: _isComposing? () => _handleSubmitted(_etController.text): null,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
   void _handleSubmitted(String text) {
     _etController.clear();
+
+    setState(() {
+      _isComposing = false;
+    });
 
     if (text == "") return;
 
