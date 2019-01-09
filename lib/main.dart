@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/ui/material_log_in.dart';
 import 'package:flutter_app/ui/async_task.dart';
+import 'package:flutter_app/ui/backgound_task.dart';
 
 import 'utils.dart';
 
@@ -39,6 +40,7 @@ class AdamDemoApp extends StatelessWidget {
         "Adam chat": (context) => ChatScreen(),
         "Log in": (context) => LogInView(),
         "AsyncUI": (context) => DemoAsyncUI(),
+        "BackGround Task": (context) => DemoBackgroundTask(),
       },
       home: MyHomePage(title: 'Flutter Demo Main activity'),
     );
@@ -135,6 +137,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ItemData(text: "Async UI demo",
         onTap: (context) {
           Navigator.pushNamed(context, "AsyncUI");
+        },),
+      ItemData(text: "Background task",
+        onTap: (context) {
+          Navigator.pushNamed(context, "BackGround Task");
         },),
     ];
 
