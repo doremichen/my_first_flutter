@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/ui/material_log_in.dart';
+import 'package:flutter_app/ui/async_task.dart';
 
 import 'utils.dart';
 
@@ -37,6 +38,7 @@ class AdamDemoApp extends StatelessWidget {
         "play_custanimation": (context) => custAnimationDemo(),
         "Adam chat": (context) => ChatScreen(),
         "Log in": (context) => LogInView(),
+        "AsyncUI": (context) => DemoAsyncUI(),
       },
       home: MyHomePage(title: 'Flutter Demo Main activity'),
     );
@@ -129,6 +131,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ItemData(text: "Material tranning",
         onTap: (context) {
           Navigator.pushNamed(context, "Log in");
+        },),
+      ItemData(text: "Async UI demo",
+        onTap: (context) {
+          Navigator.pushNamed(context, "AsyncUI");
         },),
     ];
 
