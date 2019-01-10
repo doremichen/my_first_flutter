@@ -22,4 +22,22 @@ class Utils {
   }
 
 
+  static void showDialogInfo(BuildContext context, String message) {
+    showDialog(context: context,
+      builder: (context) => new AlertDialog(
+        title: Text("Dialog title"),
+        content: Text(message),
+        actions: <Widget>[
+          RaisedButton(
+            child: Text("Ok", style: TextStyle(color: Colors.black),),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+
+        ],
+      ),
+    );
+  }
+
 }

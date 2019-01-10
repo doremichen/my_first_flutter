@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/ui/material_log_in.dart';
 import 'package:flutter_app/ui/async_task.dart';
 import 'package:flutter_app/ui/backgound_task.dart';
+import 'package:flutter_app/ui/permission.dart';
 
 import 'utils.dart';
 
@@ -41,6 +42,7 @@ class AdamDemoApp extends StatelessWidget {
         "Log in": (context) => LogInView(),
         "AsyncUI": (context) => DemoAsyncUI(),
         "BackGround Task": (context) => DemoBackgroundTask(),
+        "PermissionReq": (context) => DemoPermissionRequest(),
       },
       home: MyHomePage(title: 'Flutter Demo Main activity'),
     );
@@ -141,6 +143,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ItemData(text: "Background task",
         onTap: (context) {
           Navigator.pushNamed(context, "BackGround Task");
+        },),
+      ItemData(text: "Permission request",
+        onTap: (context) {
+          Navigator.pushNamed(context, "PermissionReq");
         },),
     ];
 
