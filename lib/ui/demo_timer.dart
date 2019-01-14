@@ -31,7 +31,7 @@ class _DemoTimerState extends State<DemoTimer> {
       appBar: AppBar(title: Text("Demo timer"),),
       body: Center(
         child:Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             Container(
               child: _count == 0? _show: Text("Count: $_count"),
