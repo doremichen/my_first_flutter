@@ -112,15 +112,9 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: (context) {
           Navigator.pushNamed(context, "tapbox_page");
         },),
-      ItemData(text: "Open echo route",
+      ItemData(text: "Open echo demo",
         onTap: (context) {
-          Navigator.push(context, PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
-            return FadeTransition(
-              opacity: animation,
-              child: ParentWidgetC(),
-            );
-          },
-          ));
+          Navigator.pushNamed(context, "echo_page");
         },),
       ItemData(text: "Go to counter page",
         onTap: (context) {
@@ -1131,7 +1125,7 @@ class _EchoPageState extends State<EchoRoute> {
   void _exite() {
     setState(() {
       Navigator.of(context).pop();
-      debugDumpApp();
+//      debugDumpApp();
     });
   }
 
@@ -1146,7 +1140,7 @@ class _EchoPageState extends State<EchoRoute> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _exite,
-        child: Icon(Icons.delete),
+        child: Icon(Icons.close),
       ),
     );
   }
@@ -1372,9 +1366,12 @@ class _ParentWidgetCState extends State<ParentWidgetC> {
 
   @override
   Widget build(BuildContext context) {
-    return TapboxCWidget(
-      active: _active,
-      onChanged: _handleTapboxChanged,
+    return Scaffold(
+      appBar: AppBar(title: Text("Demo tab action"),),
+      body: TapboxCWidget(
+        active: _active,
+        onChanged: _handleTapboxChanged,
+      ),
     );
   }
 
@@ -1437,8 +1434,8 @@ class _TapboxCWidgetState extends State<TapboxCWidget> {
             style: TextStyle(fontSize: 40, color: Colors.green),
           ),
         ),
-        width: 200.0,
-        height: 200.0,
+        width: double.infinity,
+        height: double.infinity,
         decoration: BoxDecoration(
           color: Colors.yellow,
           border: _hightlight? Border.all(color: Colors.blue[700], width: 10.0,)
