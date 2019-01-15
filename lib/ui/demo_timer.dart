@@ -34,6 +34,10 @@ class _DemoTimerState extends State<DemoTimer> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             Container(
+              alignment: Alignment.center,
+              height: 200.0,
+              width: double.infinity,
+              color: Colors.yellow,
               child: _count == 0? _show: Text("Count: $_count"),
             ),
             ButtonBar(
