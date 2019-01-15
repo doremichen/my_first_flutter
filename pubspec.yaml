@@ -23,6 +23,7 @@ dependencies:
   fluttertoast: ^2.2.2
   http: any
   permission: any
+  flutter_local_notifications: any
 
 dev_dependencies:
   flutter_test:

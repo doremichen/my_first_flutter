@@ -6,6 +6,7 @@ import 'package:flutter_app/ui/async_task.dart';
 import 'package:flutter_app/ui/backgound_task.dart';
 import 'package:flutter_app/ui/permission.dart';
 import 'package:flutter_app/ui/demo_timer.dart';
+import 'package:flutter_app/ui/adam_notification.dart';
 
 import 'utils.dart';
 
@@ -45,6 +46,7 @@ class AdamDemoApp extends StatelessWidget {
         "BackGround Task": (context) => DemoBackgroundTask(),
         "PermissionReq": (context) => DemoPermissionRequest(),
         "DemoTimer": (context) => DemoTimer(),
+        "DemoNotification": (context) => DemoNotification(),
       },
       home: MyHomePage(title: 'Flutter Demo Main activity'),
     );
@@ -147,6 +149,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ItemData(text: "Demo timer",
         onTap: (context) {
           Navigator.pushNamed(context, "DemoTimer");
+        },),
+      ItemData(text: "Demo Notification",
+        onTap: (context) {
+          Navigator.pushNamed(context, "DemoNotification");
         },),
     ];
 
