@@ -39,7 +39,7 @@ class AdamDemoApp extends StatelessWidget {
         "counter_page": (context) => NewRoute2(),
         "tapbox_page": (context) => ParentWidgetC(),
         "notify_page": (context) => CustNotifyTestRoute(),
-        "play_custanimation": (context) => custAnimationDemo(),
+        "play_custanimation": (context) => CustAnimationDemo(),
         "Adam chat": (context) => ChatScreen(),
         "Log in": (context) => LogInView(),
         "AsyncUI": (context) => DemoAsyncUI(),
@@ -268,15 +268,15 @@ class CustomizeAnimation extends StatelessWidget {
 ///
 /// Demo customized animation
 ///
-class custAnimationDemo extends StatefulWidget {
+class CustAnimationDemo extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _custAnimationDemoState();
+    return _CustAnimationDemoState();
   }
 
 }
 
-class _custAnimationDemoState extends State<custAnimationDemo> with TickerProviderStateMixin
+class _CustAnimationDemoState extends State<CustAnimationDemo> with TickerProviderStateMixin
 {
 
   AnimationController controller;
@@ -807,7 +807,7 @@ class _FormTestRouteSate extends State<FormTestRoute> {
                           color: Theme.of(context).primaryColor,
                           textColor: Colors.white,
                           onPressed: () {
-                        if ((_formKey.currentState as FormState).validate()) {
+                        if ((_formKey.currentState).validate()) {
                             print("Pass~~~~~~~~~~~");
                         }
                       }),
