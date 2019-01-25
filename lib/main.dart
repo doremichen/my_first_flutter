@@ -105,6 +105,11 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            // Place holder
+            Container(
+              height: 50,
+              child: Placeholder(color: Colors.red,),
+            ),
             Expanded(
               child: ListView.builder(
                   itemCount: App_Const.RAGE_Name.length,
@@ -379,13 +384,22 @@ class _CustNotifyTestRouteState extends State<CustNotifyTestRoute> {
               Builder(
                 builder: (context) {
                   return RaisedButton(
-                    child: Text("Send message"),
+                    color: Colors.white,
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text("Send message", style: TextStyle(fontSize: 20,), textAlign: TextAlign.center,),
                     onPressed: () {
                       MyNotify("Hi notify...").dispatch(context);
                     },
+                    shape: BorderDirectional(
+                      top: BorderSide(color: Colors.red, width: 10),
+                      bottom: BorderSide(color: Colors.grey, width: 10),
+                      start: BorderSide(color: Colors.green, width: 10),
+                      end: BorderSide(color: Colors.yellow, width: 10),
+                    ),
                   );
                 },
               ),
+              Divider(color: Colors.black, height: 10,),
               Text(_msg),
             ],
           ),
