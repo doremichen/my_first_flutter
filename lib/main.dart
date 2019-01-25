@@ -14,6 +14,22 @@ import 'ui/adam_chat.dart';
 
 void main() => runApp(AdamDemoApp());
 
+const List<String> routeName = [
+  "new_page",
+  "echo_page",
+  "counter_page",
+  "tapbox_page",
+  "notify_page",
+  "play_custanimation",
+  "Adam chat",
+  "Log in",
+  "AsyncUI",
+  "BackGround Task",
+  "PermissionReq",
+  "DemoTimer",
+  "DemoNotification",
+];
+
 class AdamDemoApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -34,19 +50,19 @@ class AdamDemoApp extends StatelessWidget {
       ),
       // Register main route table
       routes: {
-        "new_page": (context) => ScaleAnimateRoute(),
-        "echo_page": (context) => EchoRoute("Fixed content"),
-        "counter_page": (context) => NewRoute2(),
-        "tapbox_page": (context) => ParentWidgetC(),
-        "notify_page": (context) => CustNotifyTestRoute(),
-        "play_custanimation": (context) => CustAnimationDemo(),
-        "Adam chat": (context) => ChatScreen(),
-        "Log in": (context) => LogInView(),
-        "AsyncUI": (context) => DemoAsyncUI(),
-        "BackGround Task": (context) => DemoBackgroundTask(),
-        "PermissionReq": (context) => DemoPermissionRequest(),
-        "DemoTimer": (context) => DemoTimer(),
-        "DemoNotification": (context) => DemoNotification(),
+        routeName[0]: (context) => ScaleAnimateRoute(),
+        routeName[1]: (context) => EchoRoute("Fixed content"),
+        routeName[2]: (context) => NewRoute2(),
+        routeName[3]: (context) => ParentWidgetC(),
+        routeName[4]: (context) => CustNotifyTestRoute(),
+        routeName[5]: (context) => CustAnimationDemo(),
+        routeName[6]: (context) => ChatScreen(),
+        routeName[7]: (context) => LogInView(),
+        routeName[8]: (context) => DemoAsyncUI(),
+        routeName[9]: (context) => DemoBackgroundTask(),
+        routeName[10]: (context) => DemoPermissionRequest(),
+        routeName[11]: (context) => DemoTimer(),
+        routeName[12]: (context) => DemoNotification(),
       },
       home: MyHomePage(title: 'Flutter Demo Main activity'),
     );
