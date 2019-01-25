@@ -12,23 +12,11 @@ import 'utils.dart';
 
 import 'ui/adam_chat.dart';
 
+import 'util/_const.dart';
+
 void main() => runApp(AdamDemoApp());
 
-const List<String> routeName = [
-  "new_page",
-  "echo_page",
-  "counter_page",
-  "tapbox_page",
-  "notify_page",
-  "play_custanimation",
-  "Adam chat",
-  "Log in",
-  "AsyncUI",
-  "BackGround Task",
-  "PermissionReq",
-  "DemoTimer",
-  "DemoNotification",
-];
+
 
 class AdamDemoApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -50,19 +38,19 @@ class AdamDemoApp extends StatelessWidget {
       ),
       // Register main route table
       routes: {
-        routeName[0]: (context) => ScaleAnimateRoute(),
-        routeName[1]: (context) => EchoRoute("Fixed content"),
-        routeName[2]: (context) => NewRoute2(),
-        routeName[3]: (context) => ParentWidgetC(),
-        routeName[4]: (context) => CustNotifyTestRoute(),
-        routeName[5]: (context) => CustAnimationDemo(),
-        routeName[6]: (context) => ChatScreen(),
-        routeName[7]: (context) => LogInView(),
-        routeName[8]: (context) => DemoAsyncUI(),
-        routeName[9]: (context) => DemoBackgroundTask(),
-        routeName[10]: (context) => DemoPermissionRequest(),
-        routeName[11]: (context) => DemoTimer(),
-        routeName[12]: (context) => DemoNotification(),
+        App_Const.RAGE_Name[0]: (context) => ScaleAnimateRoute(),
+        App_Const.RAGE_Name[1]: (context) => EchoRoute("Fixed content"),
+        App_Const.RAGE_Name[2]: (context) => NewRoute2(),
+        App_Const.RAGE_Name[3]: (context) => ParentWidgetC(),
+        App_Const.RAGE_Name[4]: (context) => CustNotifyTestRoute(),
+        App_Const.RAGE_Name[5]: (context) => CustAnimationDemo(),
+        App_Const.RAGE_Name[6]: (context) => ChatScreen(),
+        App_Const.RAGE_Name[7]: (context) => LogInView(),
+        App_Const.RAGE_Name[8]: (context) => DemoAsyncUI(),
+        App_Const.RAGE_Name[9]: (context) => DemoBackgroundTask(),
+        App_Const.RAGE_Name[10]: (context) => DemoPermissionRequest(),
+        App_Const.RAGE_Name[11]: (context) => DemoTimer(),
+        App_Const.RAGE_Name[12]: (context) => DemoNotification(),
       },
       home: MyHomePage(title: 'Flutter Demo Main activity'),
     );
@@ -88,16 +76,6 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-typedef ItemCallBack = Widget Function(BuildContext context);
-
-class ItemData {
-  final String text;
-  ItemCallBack onTap;
-
-  ItemData({this.text, this.onTap});
-}
-
-
 class _MyHomePageState extends State<MyHomePage> {
 
 
@@ -117,61 +95,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
 
-    final List<ItemData> items = [
-      ItemData(text: "Play custanimation",
-          onTap: (context) {
-            Navigator.pushNamed(context, "play_custanimation");
-          }),
-      ItemData(text: "Go to notify page",
-        onTap: (context) {
-          Navigator.pushNamed(context, "notify_page");
-        },),
-      ItemData(text: "go to tapBox... "*4,
-        onTap: (context) {
-          Navigator.pushNamed(context, "tapbox_page");
-        },),
-      ItemData(text: "Open echo demo",
-        onTap: (context) {
-          Navigator.pushNamed(context, "echo_page");
-        },),
-      ItemData(text: "Go to counter page",
-        onTap: (context) {
-          Navigator.pushNamed(context, "counter_page");
-        },),
-      ItemData(text: "Show alert dialog",
-        onTap: (context) {
-          Utils.showAlertDialog(context);
-        },),
-      ItemData(text: "Adam chat",
-        onTap: (context) {
-          Navigator.pushNamed(context, "Adam chat");
-        },),
-      ItemData(text: "Material tranning",
-        onTap: (context) {
-          Navigator.pushNamed(context, "Log in");
-        },),
-      ItemData(text: "Async UI demo",
-        onTap: (context) {
-          Navigator.pushNamed(context, "AsyncUI");
-        },),
-      ItemData(text: "Background task",
-        onTap: (context) {
-          Navigator.pushNamed(context, "BackGround Task");
-        },),
-      ItemData(text: "Permission request",
-        onTap: (context) {
-          Navigator.pushNamed(context, "PermissionReq");
-        },),
-      ItemData(text: "Demo timer",
-        onTap: (context) {
-          Navigator.pushNamed(context, "DemoTimer");
-        },),
-      ItemData(text: "Demo Notification",
-        onTap: (context) {
-          Navigator.pushNamed(context, "DemoNotification");
-        },),
-    ];
-
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -184,13 +107,13 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Expanded(
               child: ListView.builder(
-                  itemCount: items.length,
+                  itemCount: App_Const.RAGE_Name.length,
                   itemBuilder: (context, id) {
                     return Card(
                       child: ListTile(
-                        title: Text(items[id].text),
+                        title: Text(App_Const.RAGE_Name[id]),
                         onTap: () {
-                          items[id].onTap(context);
+                          Navigator.pushNamed(context, App_Const.RAGE_Name[id]);
                         },
                       ),
 
