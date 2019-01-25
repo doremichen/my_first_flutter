@@ -8,7 +8,7 @@ import 'package:flutter_app/ui/permission.dart';
 import 'package:flutter_app/ui/demo_timer.dart';
 import 'package:flutter_app/ui/adam_notification.dart';
 
-import 'utils.dart';
+import 'util/utils.dart';
 
 import 'ui/adam_chat.dart';
 
