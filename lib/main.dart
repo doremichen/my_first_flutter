@@ -429,7 +429,7 @@ class _CustNotifyTestRouteState extends State<CustNotifyTestRoute> {
               child: _buildNotifyPage(),
             ),
             Container(
-              child: _buildToDoPage(),
+              child: MyDropDownButtonPage(),
             ),
             Container(
               child: _buildToDoPage(),
@@ -492,6 +492,69 @@ class _CustNotifyTestRouteState extends State<CustNotifyTestRoute> {
   );
 }
 
+// Customize drop down button page
+class MyDropDownButtonPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+
+    return _MyDropDownButtonPageState();
+  }
+
+}
+
+class _MyDropDownButtonPageState extends State<MyDropDownButtonPage> {
+
+  static const List<String> itemsLabel = [
+    "Item 1",
+    "Item 2",
+    "Item 3",
+    "Item 4",
+  ];
+
+  List<DropdownMenuItem<int>> items = List.generate(itemsLabel.length, (id) {
+    return DropdownMenuItem(
+      value: id,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Icon(Icons.info),
+          SizedBox(width: 10,),
+          Text("${itemsLabel[id]}"),
+        ],
+      ),
+    );
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Text("Drop down page implementation..."),
+            Divider(height: 5,color: Colors.black,),
+            _buildDropDownButton(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // build Dropdown Button
+  int _value = 0;
+  Widget _buildDropDownButton() => DropdownButton<int>(
+    items: items.toList(),
+    value: _value,
+    onChanged: (value) {
+      Fluttertoast.showToast(msg: "Hit me: ${itemsLabel[value]}");
+      setState(() {
+        _value = value;
+      });
+    },
+    isExpanded: true,
+    hint: Text("Please select item", style: TextStyle(color: Colors.black),),
+  );
+}
 
 
 class NotificationTestRoute extends StatelessWidget {
