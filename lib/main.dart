@@ -571,36 +571,33 @@ class _MyDropDownButtonPageState extends State<MyDropDownButtonPage> {
 class NotificationTestRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Test Test Test Notifacation"),),
-      body: NotificationListener(
-          onNotification: (notify){
-            switch(notify.runtimeType) {
-              case ScrollStartNotification:
-                print("ScrollStartNotification...");
-                Fluttertoast.showToast(msg: "ScrollStartNotification...");
-                break;
-              case ScrollUpdateNotification:
-                print("ScrollUpdateNotification...");
-                Fluttertoast.showToast(msg: "ScrollUpdateNotification...");
-                break;
-              case ScrollEndNotification:
-                print("ScrollEndNotification...");
-                Fluttertoast.showToast(msg: "ScrollEndNotification...");
-                break;
-              case OverscrollNotification:
-                print("OverscrollNotification...");
-                Fluttertoast.showToast(msg: "OverscrollNotification...");
-                break;
-            }
+    return NotificationListener(
+        onNotification: (notify){
+          switch(notify.runtimeType) {
+            case ScrollStartNotification:
+              print("ScrollStartNotification...");
+              Fluttertoast.showToast(msg: "ScrollStartNotification...");
+              break;
+            case ScrollUpdateNotification:
+              print("ScrollUpdateNotification...");
+              Fluttertoast.showToast(msg: "ScrollUpdateNotification...");
+              break;
+            case ScrollEndNotification:
+              print("ScrollEndNotification...");
+              Fluttertoast.showToast(msg: "ScrollEndNotification...");
+              break;
+            case OverscrollNotification:
+              print("OverscrollNotification...");
+              Fluttertoast.showToast(msg: "OverscrollNotification...");
+              break;
+          }
+        },
+        child: ListView.builder(
+          itemBuilder: (context, id) {
+            return ListTile(title: Text("Item: $id"),);
           },
-          child: ListView.builder(
-              itemBuilder: (context, id) {
-                  return ListTile(title: Text("Item: $id"),);
-              },
-              itemCount: 100,
-          )
-      ),
+          itemCount: 100,
+        )
     );
   }
 
@@ -1357,8 +1354,16 @@ class _CounterWidgetState extends State<CounterWidget> {
         title: Text("Welcome to counter page"),
       ),
       body: Center(
-      child: FlatButton(onPressed: ()=>setState(() => ++counter),
-          child: Text("counter: $counter")),
+      child: Column(
+          children: <Widget>[
+            FlatButton(onPressed: ()=>setState(() => ++counter),
+                child: Text("counter: $counter")),
+            Divider(height: 5, color: Colors.black,),
+            Expanded(
+              child: NotificationTestRoute(),
+            ),
+          ],
+       ),
       ),
     );
   }
