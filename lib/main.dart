@@ -412,6 +412,9 @@ class _CustNotifyTestRouteState extends State<CustNotifyTestRoute> {
     child: TabBar(
       isScrollable: true,
       tabs: tabItems.toList(),
+      onTap: (index) {
+        Fluttertoast.showToast(msg: "Hit me: ${tabItemsLabel[index]}");
+      },
     ),
   );
 
