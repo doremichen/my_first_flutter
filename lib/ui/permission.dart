@@ -16,7 +16,7 @@ class DemoPermissionRequest extends StatefulWidget {
 }
 
 class _DemoPermissionRequestState extends State<DemoPermissionRequest> {
-  String permissionSatus = "Unknown";
+  String permissionStatus = "Unknown";
 
 
   final List<PermissionName> list = [
@@ -44,7 +44,7 @@ class _DemoPermissionRequestState extends State<DemoPermissionRequest> {
              Container(
                alignment: Alignment.center,
                //show platform version
-               child: Text("Permission Status: $permissionSatus", style: TextStyle(fontSize: 24.0),),
+               child: Text("Permission Status: $permissionStatus", style: TextStyle(fontSize: 24.0),),
              ),
           ],
         ),
@@ -79,13 +79,13 @@ class _DemoPermissionRequestState extends State<DemoPermissionRequest> {
 
         } else {
           print("getPermissionStatus: Allow");
-          permissionSatus = "Allow...";
+          permissionStatus = "Allow...";
         }
     });
 
     // Update UI
     setState(() {
-      permissionSatus;
+      permissionStatus;
     });
   }
 
@@ -97,10 +97,10 @@ class _DemoPermissionRequestState extends State<DemoPermissionRequest> {
       // Check permission status
       if (permissions.permissionStatus != PermissionStatus.allow) {
         print("_processRequestPermission: Not allow: ${permissions.permissionName}");
-        permissionSatus = "Not allow";
+        permissionStatus = "Not allow";
       } else {
         print("_processRequestPermission: Allow...: ${permissions.permissionName}");
-        permissionSatus = "Allow...";
+        permissionStatus = "Allow...";
         allowNum++;
       }
     });

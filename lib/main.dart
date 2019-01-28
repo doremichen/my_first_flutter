@@ -366,12 +366,88 @@ class _CustNotifyTestRouteState extends State<CustNotifyTestRoute> {
 
   String _msg = "";
 
+  static const List<String> tabItemsLabel = [
+    "Tab1",
+    "Tab2",
+    "Tab3",
+    "Tab4",
+    "Tab5",
+    "Tab6",
+  ];
+
+  List<Tab> tabItems;
+
+  @override
+  void initState() {
+    super.initState();
+
+    tabItems = List.generate(tabItemsLabel.length, (i) {
+      return Tab(text: tabItemsLabel[i]);
+    });
+
+  }
+
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(title: Text("Notify Notify Notify"),),
-      body: NotificationListener<MyNotify> (
+      body: DefaultTabController(
+          length: tabItemsLabel.length,
+          child: Column(
+            children: <Widget>[
+              // Tab bar
+              _buildTabBar(),
+              // Tab bar view
+              _buildTabBarView(),
+            ],
+          ),
+      ),
+    );
+  }
+
+  // build tab bar
+  Widget _buildTabBar() => Container(
+    constraints: BoxConstraints.expand(height: 50),
+    child: TabBar(
+      isScrollable: true,
+      tabs: tabItems.toList(),
+    ),
+  );
+
+  // build tab bar view
+  // This view depend on the tabBar item
+  //
+  Widget _buildTabBarView() => Expanded(
+    child: Container(
+      child: TabBarView(
+          children: [
+            Container(
+              child: _buildNotifyPage(),
+            ),
+            Container(
+              child: _buildToDoPage(),
+            ),
+            Container(
+              child: _buildToDoPage(),
+            ),
+            Container(
+              child: _buildToDoPage(),
+            ),
+            Container(
+              child: _buildToDoPage(),
+            ),
+            Container(
+              child: _buildToDoPage(),
+            ),
+          ],
+
+      ),
+    ),
+  );
+
+
+  Widget _buildNotifyPage() => NotificationListener<MyNotify> (
         onNotification: (notify) {
           setState(() {
             _msg = "Info: " + notify.msg;
@@ -404,10 +480,13 @@ class _CustNotifyTestRouteState extends State<CustNotifyTestRoute> {
             ],
           ),
         ),
-      ),
-    );
-  }
+      );
 
+  Widget _buildToDoPage() => Center(
+    child: Container(
+      child: Text("Not implement yet..."),
+    ),
+  );
 }
 
 
