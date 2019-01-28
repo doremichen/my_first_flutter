@@ -374,6 +374,7 @@ class _CustNotifyTestRouteState extends State<CustNotifyTestRoute> {
     "Tab5",
     "Tab6",
     "Tab7",
+    "Tab8",
   ];
 
   List<Tab> tabItems;
@@ -447,6 +448,9 @@ class _CustNotifyTestRouteState extends State<CustNotifyTestRoute> {
             ),
             Container(
               child: FormTestRoute(),
+            ),
+            Container(
+              child: SwitchAndCheckBoxTest(),
             ),
           ],
 
@@ -1022,54 +1026,55 @@ class _SwitchAndCheckBoxTestSate extends State<SwitchAndCheckBoxTest> {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("Demo switch and checkbox"),
-        ),
-        body: Center(
-          child: Column(
-            children: <Widget>[
-                Switch(
-                  value: _switch,
-                  onChanged: (value) {
-                    print(value);
-                    setState(() {
-                      _switch = value;
-                    });
-                  },
-                ),
-              Checkbox(
-                value: _check,
-                activeColor: Colors.red,
-                onChanged: (value) {
-                  print(value);
-                  setState(() {
-                    _check = value;
-                  });
-                },
-              ),
-              TextField(
-                controller: _controller,
-                autofocus: true,
-                decoration: InputDecoration(
-                  labelText: "Name",
-                  hintText: "user name or email",
-                  prefixIcon: Icon(Icons.person),
-                ),
-                maxLength: 100,
-              ),
-              TextField(
-                autofocus: true,
-                decoration: InputDecoration(
-                  labelText: "Password",
-                  hintText: "your login password",
-                  prefixIcon: Icon(Icons.lock),
-                ),
-                obscureText: true,
-              )
-            ],
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Switch(
+            value: _switch,
+            onChanged: (value) {
+              print(value);
+              setState(() {
+                _switch = value;
+              });
+            },
           ),
-        ),
+          Checkbox(
+            value: _check,
+            activeColor: Colors.red,
+            onChanged: (value) {
+              print(value);
+              setState(() {
+                _check = value;
+              });
+            },
+          ),
+          Container(
+            child: Column(
+              children: <Widget>[
+                TextField(
+                  controller: _controller,
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    labelText: "Name",
+                    hintText: "user name or email",
+                    prefixIcon: Icon(Icons.person),
+                  ),
+                  maxLength: 100,
+                ),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: "Password",
+                    hintText: "your login password",
+                    prefixIcon: Icon(Icons.lock),
+                  ),
+                  obscureText: true,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
