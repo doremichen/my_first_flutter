@@ -1069,7 +1069,7 @@ class NewRoute extends StatelessWidget {
 }
 
 class EchoRoute extends StatefulWidget {
-  final String tip;
+  String tip;
   EchoRoute(this.tip);
 
   @override
@@ -1081,12 +1081,52 @@ class EchoRoute extends StatefulWidget {
 
 class _EchoPageState extends State<EchoRoute> {
 
+  List<String> navigateStr = [
+    "Info1",
+    "Info2",
+    "Info3",
+  ];
+
+
   void _exite() {
     setState(() {
       Navigator.of(context).pop();
 //      debugDumpApp();
     });
   }
+
+  // Bottom navigate bar
+  int _currIdex = 0;
+  Widget _buildNavigationBottom() => BottomNavigationBar(
+    type: BottomNavigationBarType.fixed,
+    items: [
+      BottomNavigationBarItem(
+        backgroundColor: Colors.red,
+        icon: Icon(Icons.info, size: 30, color: Colors.green,),
+        title: Text(navigateStr[0]),
+        activeIcon: Icon(Icons.info, size: 60, color: Colors.yellow,),
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.info, size: 30, color: Colors.green,),
+        title: Text(navigateStr[1]),
+        activeIcon: Icon(Icons.info, size: 60, color: Colors.yellow,),
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.info, size: 30, color: Colors.green,),
+        title: Text(navigateStr[2]),
+        activeIcon: Icon(Icons.info, size: 60, color: Colors.yellow,),
+      ),
+    ],
+    currentIndex: _currIdex,
+    onTap: (index) {
+      _currIdex = index;
+      // Update UI
+      setState(() {
+        widget.tip = navigateStr[index];
+      });
+    },
+  );
+
 
   @override
   Widget build(BuildContext context) {
@@ -1097,6 +1137,7 @@ class _EchoPageState extends State<EchoRoute> {
       body: Center(
         child: Text(widget.tip),
       ),
+      bottomNavigationBar: _buildNavigationBottom(),
       floatingActionButton: FloatingActionButton(
         onPressed: _exite,
         child: Icon(Icons.close),
