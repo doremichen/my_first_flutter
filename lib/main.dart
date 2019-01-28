@@ -373,6 +373,7 @@ class _CustNotifyTestRouteState extends State<CustNotifyTestRoute> {
     "Tab4",
     "Tab5",
     "Tab6",
+    "Tab7",
   ];
 
   List<Tab> tabItems;
@@ -403,6 +404,7 @@ class _CustNotifyTestRouteState extends State<CustNotifyTestRoute> {
             ],
           ),
       ),
+      resizeToAvoidBottomPadding: false,
     );
   }
 
@@ -432,16 +434,19 @@ class _CustNotifyTestRouteState extends State<CustNotifyTestRoute> {
               child: MyDropDownButtonPage(),
             ),
             Container(
-              child: _buildToDoPage(),
+              child: TapboxA(),
             ),
             Container(
-              child: _buildToDoPage(),
+              child: PaddingTestRoute(),
             ),
             Container(
-              child: _buildToDoPage(),
+              child: FlexLayoutTestRoute(),
             ),
             Container(
-              child: _buildToDoPage(),
+              child: ListViewTest(),
+            ),
+            Container(
+              child: FormTestRoute(),
             ),
           ],
 
@@ -772,9 +777,6 @@ class FlexLayoutTestRoute extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Demo constrainted box"),
-      ),
       body: ConstrainedBox(
         constraints: BoxConstraints.expand(),
         child: Stack(
@@ -803,40 +805,37 @@ class FlexLayoutTestRoute extends StatelessWidget {
 }
 
 class ListViewTest extends StatelessWidget {
+
+  static const List<Icon> itemsIcon = [
+    Icon(Icons.map),
+    Icon(Icons.photo_album),
+    Icon(Icons.phone),
+  ];
+
+  static const List<Text> itemsTitle = [
+    Text('Maps'),
+    Text('Album'),
+    Text('Phone'),
+  ];
+
+  static List<ListTile> items = List.generate(itemsIcon.length, (id) {
+    return ListTile(
+       leading: itemsIcon[id],
+       title: itemsTitle[id],
+
+    );
+  });
+
+
   @override
   Widget build(BuildContext context) {
 
     return MaterialApp(
       title: "List view test",
       home: Scaffold(
-        appBar: AppBar(
-          title: Text("Demo list view"),
-        ),
         body: ListView(
           padding: const EdgeInsets.all(20.0),
-          children: <Widget>[
-        new ListTile(
-        leading: new Icon(Icons.map),
-        title: new Text('Maps'),
-          onTap: () {
-
-          },
-      ),
-      new ListTile(
-        leading: new Icon(Icons.photo_album),
-        title: new Text('Album'),
-        onTap: () {
-
-        },
-      ),
-      new ListTile(
-        leading: new Icon(Icons.phone),
-        title: new Text('Phone'),
-        onTap: () {
-
-        },
-      ),
-          ],
+          children: items.toList(),
         ),
       ),
     );
@@ -859,66 +858,70 @@ class _FormTestRouteSate extends State<FormTestRoute> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Test form"),
+
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.all(20.0),
+        child: _buildForm(),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-        child: Form(
-          key: _formKey,
-          autovalidate: true,
-          child: Column(
+    );
+  }
+  
+  
+  Widget _buildForm() => Form(
+    key: _formKey,
+    autovalidate: true,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        TextFormField(
+          autofocus: true,
+          controller: _nameController,
+          decoration: InputDecoration(
+              labelText: "Name:",
+              hintText: "user name or email address",
+              icon: Icon(Icons.person)
+          ),
+          validator: (v) {
+            if (v.isEmpty) {
+              return "user name can not be null...";
+            }
+          },
+        ),
+        TextFormField(
+          controller: _passwordController,
+          decoration: InputDecoration(
+              labelText: "Password:",
+              hintText: "Your log password...",
+              icon: Icon(Icons.lock)
+          ),
+          obscureText: true,
+          validator: (v) {
+            return v.trim().length > 5? null: "password not less than 6...";
+          },
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top:28.0),
+          child: Row(
             children: <Widget>[
-              TextFormField(
-                autofocus: true,
-                controller: _nameController,
-                decoration: InputDecoration(
-                  labelText: "Name:",
-                  hintText: "user name or email address",
-                  icon: Icon(Icons.person)
-                ),
-                validator: (v) {
-                  return v.trim().length == 0? "user name can not be null...": "";
-                },
-              ),
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: "Password:",
-                    hintText: "Your log password...",
-                    icon: Icon(Icons.lock)
-                ),
-                obscureText: true,
-                validator: (v) {
-                  return v.trim().length > 5? null: "password not less than 6...";
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top:28.0),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: RaisedButton(
-                          padding: EdgeInsets.all(15.0),
-                          child: Text("LogIn"),
-                          color: Theme.of(context).primaryColor,
-                          textColor: Colors.white,
-                          onPressed: () {
-                        if ((_formKey.currentState).validate()) {
-                            print("Pass~~~~~~~~~~~");
-                        }
-                      }),
-                    ),
-                  ],
-                ),
+              Expanded(
+                child: RaisedButton(
+                    padding: EdgeInsets.all(15.0),
+                    child: Text("LogIn"),
+                    color: Theme.of(context).primaryColor,
+                    textColor: Colors.white,
+                    onPressed: () {
+                      if ((_formKey.currentState).validate()) {
+                        Fluttertoast.showToast(msg: "pass~~~~~~");
+                      }
+                    }),
               ),
             ],
           ),
         ),
-      ),
-    );
-  }
+      ],
+    ),
+  );
 
 }
 
