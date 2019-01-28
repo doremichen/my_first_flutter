@@ -17,5 +17,6 @@ class App_Const {
     "PermissionReq",
     "DemoTimer",
     "DemoNotification",
+    "Input learning",
   ];
 }

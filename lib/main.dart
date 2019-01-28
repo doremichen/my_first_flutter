@@ -7,6 +7,7 @@ import 'package:flutter_app/ui/backgound_task.dart';
 import 'package:flutter_app/ui/permission.dart';
 import 'package:flutter_app/ui/demo_timer.dart';
 import 'package:flutter_app/ui/adam_notification.dart';
+import 'package:flutter_app/ui/adam_input.dart';
 
 import 'util/utils.dart';
 
@@ -51,6 +52,7 @@ class AdamDemoApp extends StatelessWidget {
         App_Const.RAGE_Name[10]: (context) => DemoPermissionRequest(),
         App_Const.RAGE_Name[11]: (context) => DemoTimer(),
         App_Const.RAGE_Name[12]: (context) => DemoNotification(),
+        App_Const.RAGE_Name[13]: (context) => MyTextInput(),
       },
       home: MyHomePage(title: 'Flutter Demo Main activity'),
     );
@@ -1018,7 +1020,7 @@ class _SwitchAndCheckBoxTestSate extends State<SwitchAndCheckBoxTest> {
 
     // set default data
     _controller.text = "hello adam....";
-    _controller.selection = TextSelection(baseOffset: 2,
+    _controller.selection = TextSelection(baseOffset: 0,
         extentOffset: _controller.text.length);
 
   }
@@ -1059,6 +1061,7 @@ class _SwitchAndCheckBoxTestSate extends State<SwitchAndCheckBoxTest> {
                     labelText: "Name",
                     hintText: "user name or email",
                     prefixIcon: Icon(Icons.person),
+                    border: OutlineInputBorder(),
                   ),
                   maxLength: 100,
                 ),
@@ -1067,11 +1070,27 @@ class _SwitchAndCheckBoxTestSate extends State<SwitchAndCheckBoxTest> {
                     labelText: "Password",
                     hintText: "your login password",
                     prefixIcon: Icon(Icons.lock),
+                    border: OutlineInputBorder(),
                   ),
                   obscureText: true,
                 ),
               ],
             ),
+          ),
+          ButtonBar(
+            alignment: MainAxisAlignment.end,
+            children: <Widget>[
+              RaisedButton(
+                child: Text("Hit me..."),
+                elevation: 8.0,
+                shape: BeveledRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(7.0)),
+                ),
+                onPressed: () {
+
+                },
+              ),
+            ],
           ),
         ],
       ),
