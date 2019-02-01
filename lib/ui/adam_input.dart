@@ -31,6 +31,16 @@ class _MyTextInputState extends State<MyTextInput> {
               _buildEditInput(),
               Divider(height: 5, color: Colors.red,),
               _buildStep(),
+              Divider(height: 5, color: Colors.red,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  _simplePopup(),
+                  SizedBox(width: 5.0,),
+                  _childPopup(),
+
+                ],
+              ),
             ],
           ),
         )
@@ -38,6 +48,55 @@ class _MyTextInputState extends State<MyTextInput> {
 
     );
   }
+
+  static const iTems = [
+    {
+      "name": "One",
+      "value": 1,
+    },
+    {
+      "name": "Two",
+      "value": 2,
+    },
+    {
+      "name": "Three",
+      "value": 3,
+    },
+  ];
+
+  List<PopupMenuItem<int>> menuItems = List.generate(iTems.length, (i) {
+      return PopupMenuItem<int>(
+        value: iTems[i]["value"],
+        child: Text(iTems[i]["name"]),
+      );
+  });
+
+  // Simple popup menu
+  Widget _simplePopup() => PopupMenuButton<int>(
+      itemBuilder: (context) {
+        return menuItems.toList();
+      },
+    icon: Icon(Icons.list),
+  );
+
+  // Popup action icon
+  Widget _childPopup() => PopupMenuButton<int>(
+    itemBuilder: (context) {
+      return menuItems.toList();
+    },
+    child: Container(
+      height: 50,
+      width: 200,
+      decoration: ShapeDecoration(
+          shape: StadiumBorder(
+            side: BorderSide(color: Colors.black, width: 2),
+          ),
+      ),
+      child: Icon(Icons.forward),
+    ),
+    offset: Offset(0.0, 100.0),
+  );
+
 
   List<Step> steps = [
      Step(
