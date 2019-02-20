@@ -8,6 +8,8 @@ import 'package:flutter_app/ui/permission.dart';
 import 'package:flutter_app/ui/demo_timer.dart';
 import 'package:flutter_app/ui/adam_notification.dart';
 import 'package:flutter_app/ui/adam_input.dart';
+import 'package:flutter_app/ui/adam_basic_app.dart';
+import 'dart:async';
 
 import 'util/utils.dart';
 
@@ -39,7 +41,7 @@ class AdamDemoApp extends StatelessWidget {
       ),
       // Register main route table
       routes: {
-        App_Const.RAGE_Name[0]: (context) => ScaleAnimateRoute(),
+        App_Const.RAGE_Name[0]: (context) => MyDataHomePage(title: "Adam Basic app"),
         App_Const.RAGE_Name[1]: (context) => EchoRoute("Fixed content"),
         App_Const.RAGE_Name[2]: (context) => NewRoute2(),
         App_Const.RAGE_Name[3]: (context) => ParentWidgetC(),
@@ -165,13 +167,13 @@ class CustomizeAnimation extends StatelessWidget {
 
   CustomizeAnimation({Key key, this.controller}):super(key: key) {
    // animation height
-   height = Tween<double>(begin: .0, end: 300.0).animate(CurvedAnimation(
+   this.height = Tween<double>(begin: .0, end: 300.0).animate(CurvedAnimation(
      parent: controller,
      curve: Interval(0.0, 0.6, curve: Curves.ease,),
    ),);
 
    // animation color
-    color = ColorTween(
+    this.color = ColorTween(
       begin: Colors.green,
       end: Colors.orange,
     ).animate(CurvedAnimation(
@@ -180,7 +182,7 @@ class CustomizeAnimation extends StatelessWidget {
     ),);
 
     // animation padding
-    padding = Tween<EdgeInsets>(
+    this.padding = Tween<EdgeInsets>(
       begin: EdgeInsets.only(left: 10.0),
       end: EdgeInsets.only(left: 250.0)
     ).animate(CurvedAnimation(

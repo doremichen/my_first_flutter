@@ -4,7 +4,7 @@
 
 class App_Const {
   static const List<String> RAGE_Name = [
-    "new_page",
+    "Adam basic app",
     "echo_page",
     "counter_page",
     "tapbox_page",
