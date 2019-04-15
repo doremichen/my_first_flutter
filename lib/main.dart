@@ -4,7 +4,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/ui/material_log_in.dart';
 import 'package:flutter_app/ui/async_task.dart';
 import 'package:flutter_app/ui/backgound_task.dart';
-import 'package:flutter_app/ui/permission.dart';
 import 'package:flutter_app/ui/demo_timer.dart';
 import 'package:flutter_app/ui/adam_notification.dart';
 import 'package:flutter_app/ui/adam_input.dart';
@@ -51,10 +50,9 @@ class AdamDemoApp extends StatelessWidget {
         App_Const.RAGE_Name[7]: (context) => LogInView(),
         App_Const.RAGE_Name[8]: (context) => DemoAsyncUI(),
         App_Const.RAGE_Name[9]: (context) => DemoBackgroundTask(),
-        App_Const.RAGE_Name[10]: (context) => DemoPermissionRequest(),
-        App_Const.RAGE_Name[11]: (context) => DemoTimer(),
-        App_Const.RAGE_Name[12]: (context) => DemoNotification(),
-        App_Const.RAGE_Name[13]: (context) => MyTextInput(),
+        App_Const.RAGE_Name[10]: (context) => DemoTimer(),
+        App_Const.RAGE_Name[11]: (context) => DemoNotification(),
+        App_Const.RAGE_Name[12]: (context) => MyTextInput(),
       },
       home: MyHomePage(title: 'Flutter Demo Main activity'),
     );

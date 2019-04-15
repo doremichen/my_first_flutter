@@ -14,7 +14,6 @@ class App_Const {
     "Log in",
     "AsyncUI",
     "BackGround Task",
-    "PermissionReq",
     "DemoTimer",
     "DemoNotification",
     "Input learning",
