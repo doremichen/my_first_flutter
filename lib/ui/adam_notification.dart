@@ -126,17 +126,17 @@ class _DemoNotificationState extends State<DemoNotification> {
   }
 
   Future<void> _showNotificationWithCustSound() async {
-    var AndroidNotifyChannel = AndroidNotificationDetails("notify_channel_id",
+    var androidNotifyChannel = AndroidNotificationDetails("notify_channel_id",
       "Channel name",
       "Here put the channel description",
-      sound: "slow_spring_board",
+      sound: RawResourceAndroidNotificationSound('slow_spring_board'),
       importance: Importance.Max,
       priority: Priority.High,
     );
 
     var IOSNotifyChannel = IOSNotificationDetails();
 
-    var notifyDetail = NotificationDetails(AndroidNotifyChannel, IOSNotifyChannel);
+    var notifyDetail = NotificationDetails(androidNotifyChannel, IOSNotifyChannel);
 
     // Show notification
     await _notification.show(0, "New", "Flutter notification information", notifyDetail, payload: "Cust_sound");
